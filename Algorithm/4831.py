@@ -13,17 +13,24 @@ for test_case in range(1, T+1):
         charge[arr[i]] += 1
 
     # 버스 출발
-    # 최대 이동 거리는 k
-    distance = K
+
     j = 0
     start = 0
-    for i in range(start, N, K):
+    count = 0
+    i = 0
+
+    while i <= N:
         while j < K:
-            # 최대 이동거리를 이동했을 때, 충전기가 있다면
-            if charge[i - j] == 1:
-                start = i - j
+            # 최대 이동거리를 이동하는 동안, 충전기가 있다면
+            if charge[i + K - j] == 1:
+                i = i + K - j
+                count += 1
+                break
 
+            else:
+                j += 1
 
+    print(count)
 
 
 
