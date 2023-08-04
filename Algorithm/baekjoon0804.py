@@ -38,65 +38,103 @@
 # print(area)
 
 # 빙고
-bingo = [list(map(int, input().split())) for _ in range(5)]
+# 철수 빙고판
+arr = [[0]*5 for _ in range(5)]
 
-call = [list(map(int, input().split())) for _ in range(5)]
+# 정답빙고판
+bingo = [[0]*5 for _ in range(5)]
 
-new_call = []
-for lst in call:
-    new_call.extend(lst)
+for i in range(5):
+    arr[i] = list(map(int, input().split()))
 
-def check(bingo, num):
-    check_bingo = bingo
+for i in range(5):
+    bingo[i] = list(map(int, input().split()))
+# bingo = list(input().split() for _ in range(25))
+# print(bingo)
+#
+# for i in range(5):
+#     for j in range(5):
+#         if arr[i][j] == bingo[i]
+# 빙고 판정하는 함수(행, 열, 대각선)
+def bingo_find_r(ar):
+    # 행 빙고 판정하는 함수
+    rlt = 0
     for i in range(5):
+        all_zero = 0
         for j in range(5):
-            if check_bingo[i][j] == num:
-                check_bingo[i][j] = 0
-                check_i = i
-                check_j = j
+            if ar[i][j] == 0:
+                all_zero += 1
+        if all_zero == 5:
+            rlt += 1
+    return rlt
 
-                return check_bingo, check_i, check_j
-
-
-bingo_cnt = 0
-# 사회자가 번호 호출
-for idx in range(len(new_call)):
-    result = check(bingo, new_call[idx])
-    i = result[1]
-    j = result[2]
-
-    # 같은 열, 행, 대각선으로 봤을 때,
-    # 다 0 이면 bingo 수 + 1
-    cnt_x = 0
-    cnt_y = 0
-    cnt_xy = 0
-    cnt_xy2 = 0
-
-    # 같은 행 확인(i)
-    for k in range(5):
-        if bingo[i][k] == 0:
-            cnt_x += 1
-            if cnt_x == 5:
-                bingo_cnt += 1
-
-        if bingo[k][j] == 0:
-            cnt_y += 1
-            if cnt_y == 5:
-                bingo_cnt += 1
-
-        for l in range(5):
-            if k == l:
-                if bingo[k][l] == 0:
-                    cnt_xy += 1
-                    if cnt_xy == 5:
-                        bingo_cnt += 1
-
-            if (4 - k) == (4 - l):
-                if bingo[4 - k][4 - l] == 0:
-                    cnt_xy2 += 1
-                    if cnt_xy2 == 5:
-                        bingo_cnt += 1
+def bingo_find_c(ar):
+    # 열 빙고 판정하는 함수
+    rlt = 0
+    for i in range(5):
+        all_zero = 0
+        for j in range(5):
+            if ar[j][i] == 0:
+                all_zero += 1
+        if all_zero == 5:
+            rlt += 1
+    return rlt
 
 
-    if bingo_cnt >= 3:
-        print(idx + 1)
+def bingo_find_cr(ar):
+    # 대각선 빙고 판정하는 함수
+    # 대각선 빙고의 경우 for문 밖에 all_zero를 넣어야 초기화가 안됨!!!
+    rlt = 0
+    all_zero = 0
+    for i in range(5):
+        # for j in range(5):
+        if ar[i][i] == 0:
+            all_zero += 1
+        if all_zero == 5:
+            rlt += 1
+    return rlt
+
+def bingo_find_cr2(ar):
+    # 대각선 빙고 판정하는 함수
+    # 대각선 빙고의 경우 for문밖에 all_zero를 넣어야 초기화가 안됨
+    rlt = 0
+    all_zero = 0
+    for i in range(5):
+        # for j in range(5):
+        if ar[i][4-i] == 0:
+            all_zero += 1
+        if all_zero == 5:
+            rlt += 1
+    return rlt
+
+
+
+result = 0
+rll = 0
+for i in range(5):
+    for j in range(5):
+        # bingo[i][j]
+
+        check = 0
+
+        # while check:
+        for k in range(5):
+            for l in range(5):
+                if bingo[i][j] == arr[k][l]:
+                    arr[k][l] = 0
+                    result += 1
+                    check = 1
+            if check == 1:
+                break
+            # check
+        if result >= 12:
+            rll = bingo_find_r(arr) + bingo_find_c(arr) + bingo_find_cr(arr) + bingo_find_cr2(arr)
+            # print(f'{result}: {rll} {bingo_find_r(arr)} {bingo_find_c(arr)} {bingo_find_cr(arr)} {bingo_find_cr2(arr)}')
+            if rll >= 3:
+                # print(result)
+                break
+
+    if rll >= 3:
+        break
+
+print(result)
