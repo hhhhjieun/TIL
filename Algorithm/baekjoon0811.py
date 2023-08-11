@@ -82,6 +82,72 @@
 # result = dfs(1, N, adj_m)
 # print(result)
 
+# 바닥 장식
+# import sys
+#
+# N, M = map(int, sys.stdin.readline().split())
+#
+# deco = [list(sys.stdin.readline()) for _ in range(N)]
+#
+# total = 0  # 바닥 개수
+#
+# # 행 - 개수
+# for i in range(N):
+#     j = 0
+#     while j < M:
+#         if deco[i][j] != '-':
+#             j += 1
+#         else:
+#             k = j
+#             # arr[i][j]의 값이 1일 때, 연속되면 길이 +1
+#             while k < M:
+#                 if deco[i][k] == '-':
+#                     k += 1
+#                 # 0을 만나면 break
+#                 else:
+#                     break
+#             total += 1
+#             j = k + 1
+#
+# # 열 | 개수
+# for j in range(M):
+#     i = 0
+#     while i < N:
+#         if deco[i][j] != '|':
+#             i += 1
+#         else:
+#             k = i
+#             # arr[i][j]의 값이 1일 때, 연속되면 길이 +1
+#             while k < N:
+#                 if deco[k][j] == '|':
+#                     k += 1
+#                 # 0을 만나면 break
+#                 else:
+#                     break
+#             total += 1
+#             i = k + 1
+#
+# print(total)
+
+# 파도반 수열
+import sys
+
+T = int(sys.stdin.readline())
+
+for test_case in range(1, T + 1):
+    N = int(sys.stdin.readline())
+
+    p = [0] * 101
+
+    p[1] = 1
+    p[2] = 1
+    p[3] = 1
+    p[4] = 2
+
+    for i in range(5, N+1):
+        p[i] = p[i-1] + p[i-5]
+
+    print(p[N])
 
 
 
