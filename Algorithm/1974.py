@@ -1,12 +1,8 @@
 # 스토쿠 검증
-import sys
-sys.stdin = open('input.txt')
-
 T = int(input())
 
 for test_case in range(1, T + 1):
     arr = [list(map(int, input().split())) for _ in range(9)]
-
 
     result = True
 
@@ -51,4 +47,3 @@ for test_case in range(1, T + 1):
         print(f'#{test_case} 0')
     else:
         print(f'#{test_case} 1')
-
